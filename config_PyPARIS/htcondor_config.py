@@ -23,6 +23,7 @@ def htcondor_config(scan_folder, time_requirement_days, job_filename = 'job.job'
         fid.write('transfer_output_files = ""\n')
         fid.write("+MaxRuntime = %d\n"%(time_requirement_days*24*3600))
         fid.write("requestCpus = %d\n"%(n_cores))
+        fid.write("max_retries = 0\n")
         fid.write("queue dirname from %s\n"%listfolderfile)
     
     with open(runfilename, 'w') as fid:
