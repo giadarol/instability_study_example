@@ -135,20 +135,20 @@ class Simulation(object):
                 else:
                     fid.write("Single grid.")
             
-            with open('multigrid_config_dip.pkl', 'w') as fid:
+            with open('multigrid_config_dip.pkl', 'wb') as fid:
                 if hasattr(ecloud_dip.spacech_ele.PyPICobj, 'grids'):
                     pickle.dump(ecloud_dip.spacech_ele.PyPICobj.grids, fid)
                 else:
                     pickle.dump('Single grid.', fid)
                 
         if self.ring_of_CPUs.I_am_the_master and pp.enable_arc_quad:
-            with open('multigrid_config_quad.txt', 'w') as fid:
+            with open('multigrid_config_quad.txt', 'wb') as fid:
                 if hasattr(ecloud_quad.spacech_ele.PyPICobj, 'grids'):
                     fid.write(repr(ecloud_quad.spacech_ele.PyPICobj.grids))
                 else:
                     fid.write("Single grid.")
 
-            with open('multigrid_config_quad.pkl', 'w') as fid:
+            with open('multigrid_config_quad.pkl', 'wb') as fid:
                 if hasattr(ecloud_quad.spacech_ele.PyPICobj, 'grids'):
                     pickle.dump(ecloud_quad.spacech_ele.PyPICobj.grids, fid)
                 else:
