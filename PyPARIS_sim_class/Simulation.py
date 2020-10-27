@@ -179,10 +179,10 @@ class Simulation(object):
         i_start_part, i_end_part = sharing.my_part(myid)
         self.mypart = self.machine.one_turn_map[i_start_part:i_end_part]
         if self.ring_of_CPUs.I_am_a_worker:
-            print 'I am id=%d/%d (worker) and my part is %d long'%(myid, self.ring_of_CPUs.N_nodes, len(self.mypart))
+            print ('I am id=%d/%d (worker) and my part is %d long'%(myid, self.ring_of_CPUs.N_nodes, len(self.mypart)))
         elif self.ring_of_CPUs.I_am_the_master:
             self.non_parallel_part = self.machine.one_turn_map[i_end_parallel:]
-            print 'I am id=%d/%d (master) and my part is %d long'%(myid, self.ring_of_CPUs.N_nodes, len(self.mypart))
+            print ('I am id=%d/%d (master) and my part is %d long'%(myid, self.ring_of_CPUs.N_nodes, len(self.mypart)))
 
         #install eclouds in my part
         my_new_part = []
@@ -246,7 +246,7 @@ class Simulation(object):
         self.mypart = my_new_part
 
         if pp.footprint_mode:
-            print 'Proc. %d computing maps'%myid
+            print ('Proc. %d computing maps'%myid)
             # generate a bunch 
             bunch_for_map=self.machine.generate_6D_Gaussian_bunch_matched(
                         n_macroparticles=pp.n_macroparticles_for_footprint_map, intensity=pp.intensity, 
@@ -282,7 +282,7 @@ class Simulation(object):
                 else:
                     for ss in slices_list_for_map:
                         ele.track(ss)       
-            print 'Proc. %d done with maps'%myid
+            print ('Proc. %d done with maps'%myid)
 
             with open('measured_optics_%d.pkl'%myid, 'wb') as fid:
                 pickle.dump({
@@ -331,12 +331,12 @@ class Simulation(object):
                 self.bunch.x += x_kick
                 self.bunch.y += y_kick
             
-            print 'Bunch initialized.'
+            print ('Bunch initialized.')
         else:
-            print 'Loading bunch from file...'
+            print ('Loading bunch from file...')
             with h5py.File('bunch_status_part%02d.h5'%(SimSt.present_simulation_part-1), 'r') as fid:
                 self.bunch = self.buffer_to_piece(np.array(fid['bunch']).copy())
-            print 'Bunch loaded from file.'
+            print ('Bunch loaded from file.')
 
         # initial slicing
         self.slicer = UniformBinSlicer(n_slices = pp.n_slices, z_cuts=(-pp.z_cut, pp.z_cut))
@@ -358,7 +358,7 @@ class Simulation(object):
 
         pieces_to_be_treated = slice_obj_list
         
-        print 'N_turns', self.N_turns
+        print ('N_turns', self.N_turns)
         
         if pp.footprint_mode:
             self.recorded_particles = ParticleTrajectories(pp.n_macroparticles_for_footprint_track, self.N_turns)
@@ -382,7 +382,7 @@ class Simulation(object):
             ele.track(self.bunch)
             
         # save results		
-        #print '%s Turn %d'%(time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()), i_turn)
+        #print ('%s Turn %d'%(time.strftime("%d/%m/%Y %H:%M:%S", time.localtime()), i_turn))
         self.bunch_monitor.dump(self.bunch)
         self.slice_monitor.dump(self.bunch)
         
@@ -400,7 +400,7 @@ class Simulation(object):
         if not pp.footprint_mode and self.bunch.macroparticlenumber < pp.sim_stop_frac * pp.n_macroparticles:
             orders_to_pass.append('stop')
             self.SimSt.check_for_resubmit = False
-            print 'Stop simulation due to beam losses.'
+            print ('Stop simulation due to beam losses.')
         
         # 2. for the emittance growth
         if pp.flag_check_emittance_growth:
@@ -409,7 +409,7 @@ class Simulation(object):
             if not pp.footprint_mode and (self.bunch.epsn_x() > epsn_x_max or self.bunch.epsn_y() > epsn_y_max):
                 orders_to_pass.append('stop')
                 self.SimSt.check_for_resubmit = False
-                print 'Stop simulation due to emittance growth.'
+                print ('Stop simulation due to emittance growth.')
         
         return orders_to_pass, new_pieces_to_be_treated
 
@@ -425,13 +425,13 @@ class Simulation(object):
             # Tunes
 
             import NAFFlib
-            print 'NAFFlib spectral analysis...'
+            print ('NAFFlib spectral analysis...')
             qx_i = np.empty_like(self.recorded_particles.x_i[:,0])
             qy_i = np.empty_like(self.recorded_particles.x_i[:,0])
             for ii in range(len(qx_i)):
                 qx_i[ii] = NAFFlib.get_tune(self.recorded_particles.x_i[ii] + 1j*self.recorded_particles.xp_i[ii])
                 qy_i[ii] = NAFFlib.get_tune(self.recorded_particles.y_i[ii] + 1j*self.recorded_particles.yp_i[ii])
-            print 'NAFFlib spectral analysis done.'
+            print ('NAFFlib spectral analysis done.')
 
             # Save
             import h5py
