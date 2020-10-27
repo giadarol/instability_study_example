@@ -59,7 +59,7 @@ elif 'None':
 
 
 exec_string = {}
-exec_string['multiproc'] = 'python ../../../PyPARIS/multiprocexec.py -n %d'
+exec_string['multiproc'] = 'python -m PyPARIS.multiprocexec -n %d'
 exec_string['mpi'] = cluster_specific['mpiex'] + ' -n %d ../../../PyPARIS/withmpi.py'
 #~ exec_string['multiproc'] = 'python /afs/cern.ch/work/l/lusabato/sim_workspace_PyPARIS/PyPARIS/multiprocexec.py -n %d'
 #~ exec_string['mpi'] = cluster_specific['mpiex'] + ' -n %d /afs/cern.ch/work/l/lusabato/sim_workspace_PyPARIS/PyPARIS/withmpi.py'
