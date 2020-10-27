@@ -22,7 +22,7 @@ class Simulation(object):
         
         # read the optics if needed
         if pp.optics_pickle_file is not None:
-            with open(pp.optics_pickle_file) as fid:
+            with open(pp.optics_pickle_file, 'rb') as fid:
                 optics = pickle.load(fid)
                 self.n_kick_smooth = np.sum(['_kick_smooth_' in nn for nn in optics['name']])
         else:
