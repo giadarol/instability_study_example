@@ -59,7 +59,7 @@ elif 'None':
 
 
 exec_string = {}
-exec_string['multiproc'] = 'python ../../../PyPARIS/multiprocexec.py -n %d'
+exec_string['multiproc'] = 'python -m PyPARIS.multiprocexec -n %d'
 exec_string['mpi'] = cluster_specific['mpiex'] + ' -n %d ../../../PyPARIS/withmpi.py'
 #~ exec_string['multiproc'] = 'python /afs/cern.ch/work/l/lusabato/sim_workspace_PyPARIS/PyPARIS/multiprocexec.py -n %d'
 #~ exec_string['mpi'] = cluster_specific['mpiex'] + ' -n %d /afs/cern.ch/work/l/lusabato/sim_workspace_PyPARIS/PyPARIS/withmpi.py'
@@ -93,7 +93,7 @@ for PyPICmode, PyPICmode_tag, Dh_sc_ext, N_min_Dh_main, f_telescope, target_size
 				sim_tag = tag_prefix+'%04d'%prog_num
 
 
-				print sim_tag, current_sim_ident
+				print (sim_tag, current_sim_ident)
 				current_sim_folder = scan_folder+'/'+current_sim_ident
 				os.mkdir(current_sim_folder)
 
@@ -185,7 +185,7 @@ for PyPICmode, PyPICmode_tag, Dh_sc_ext, N_min_Dh_main, f_telescope, target_size
 
 with open(study_folder+'/run_PyPARIS', 'w') as fid:
 	fid.writelines(launch_file_lines)
-os.chmod(study_folder+'/run_PyPARIS',0755)
+os.chmod(study_folder+'/run_PyPARIS',0o755)
 
 import htcondor_config as htcc
 htcc.htcondor_config(scan_folder, time_requirement_days=2., runfilename='../run_PyPARIS_htcondor', 

@@ -14,7 +14,7 @@ CURRDIR=TBD
 cd $CURRDIR
 pwd
 
-source ../../../miniconda2/bin/activate
+source ../../../miniconda3/bin/activate
 which python
 
 export PYFRIENDSPATH=../../../
@@ -32,4 +32,4 @@ git log -n 1             >> ../SimClass_git_info.txt
 cd $CURRDIR
 cp ../../PyPARIS_sim_class/Simulation.py .
 
-stdbuf -oL python $PYFRIENDSPATH/PyPARIS/multiprocexec.py -n 16 sim_class=Simulation.Simulation >> opic.txt 2>> epic.txt
+stdbuf -oL python -m PyPARIS.multiprocexec -n 16 sim_class=Simulation.Simulation >> opic.txt 2>> epic.txt

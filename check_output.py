@@ -25,7 +25,7 @@ for dd in dirs:
         slice_fname = 'simulations_PyPARIS/'+dd+'/slice_evolution_00.h5'
         smon = mfm.monitorh5_to_obj(slice_fname, key='Slices')
         
-	den = np.sum(smon.n_macroparticles_per_slice, axis=0)
+        den = np.sum(smon.n_macroparticles_per_slice, axis=0)
         den[den==0] = -1.
         mean_x_from_slice = \
             np.sum(smon.mean_x * smon.n_macroparticles_per_slice, axis=0)/den
