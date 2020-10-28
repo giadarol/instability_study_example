@@ -29,4 +29,4 @@ def htcondor_config(scan_folder, time_requirement_days, job_filename = 'job.job'
     with open(runfilename, 'w') as fid:
         fid.write('condor_submit %s\n'%htcondor_subfile)
         fid.write('condor_q --nobatch\n')
-    os.chmod(runfilename,0755)
+    os.chmod(runfilename,0o755)
