@@ -168,23 +168,23 @@ for PyPICmode, PyPICmode_tag, Dh_sc_ext, N_min_Dh_main, f_telescope, target_size
 						 newline = 'stdbuf -oL '+ exec_string[parallel_mode]%n_cores+\
 						 ' sim_class=Simulation.Simulation >> opic.txt 2>> epic.txt\n')
 				
-				launch_file_lines += ['cd ' + current_sim_folder+'\n',
-							'bsub < job.cmd\n',
-							'cd ..\n']
+				launch_file_lines += ['cd ' + current_sim_folder,
+							'bsub < job.cmd',
+							'cd ..']
 
 				with open(current_sim_folder+'/launch_this', 'w') as fid:
-					fid.writelines(['#!/bin/bash\n','bsub < job.cmd\n'])
+					print(*['#!/bin/bash', 'bsub < job.cmd'], sep='\n', file=fid)
 
 				with open(current_sim_folder+'/opic.txt', 'w') as fid:
-					fid.writelines([''])
+					print(file=fid)
 
 				with open(current_sim_folder+'/epic.txt', 'w') as fid:
-					fid.writelines([''])
+					print(file=fid)
 
                                 
 
 with open(study_folder+'/run_PyPARIS', 'w') as fid:
-	fid.writelines(launch_file_lines)
+	print(*launch_file_lines, sep='\n', file=fid)
 os.chmod(study_folder+'/run_PyPARIS',0o755)
 
 import htcondor_config as htcc

@@ -6,27 +6,25 @@ def htcondor_config(scan_folder, time_requirement_days, job_filename = 'job.job'
                         listfolderfile = 'list_sim_folders.txt'):
     
     list_folders= os.listdir(scan_folder)
-    list_submit = []
-    for folder in list_folders:
-        if os.path.isfile(scan_folder+'/'+folder+'/'+job_filename):
-            list_submit.append(folder+'\n')
     with open('../%s'%listfolderfile, 'w') as fid:
-        fid.writelines(list_submit)
+        for folder in list_folders:
+            if os.path.isfile(scan_folder+'/'+folder+'/'+job_filename):
+                print(folder, file=fid)
 
     with open('../'+htcondor_subfile, 'w') as fid:
-        fid.write("universe = vanilla\n")
-        fid.write("executable = "+ scan_folder+"/$(dirname)/"+job_filename+"\n")
-        fid.write('arguments = ""\n')
-        fid.write("output = "+ scan_folder+'/$(dirname)/htcondor.out\n')
-        fid.write("error = "+scan_folder+"/$(dirname)/htcondor.err\n")
-        fid.write("log = "+scan_folder+"/$(dirname)/htcondor.log\n")
-        fid.write('transfer_output_files = ""\n')
-        fid.write("+MaxRuntime = %d\n"%(time_requirement_days*24*3600))
-        fid.write("requestCpus = %d\n"%(n_cores))
-        fid.write("max_retries = 0\n")
-        fid.write("queue dirname from %s\n"%listfolderfile)
+        print("universe = vanilla", file=fid)
+        print("executable = "+ scan_folder+"/$(dirname)/"+job_filename, file=fid)
+        print('arguments = ""', file=fid)
+        print("output = "+ scan_folder+'/$(dirname)/htcondor.out', file=fid)
+        print("error = "+scan_folder+"/$(dirname)/htcondor.err", file=fid)
+        print("log = "+scan_folder+"/$(dirname)/htcondor.log", file=fid)
+        print('transfer_output_files = ""', file=fid)
+        print("+MaxRuntime = %d"%(time_requirement_days*24*3600), file=fid)
+        print("requestCpus = %d"%(n_cores), file=fid)
+        print("max_retries = 0", file=fid)
+        print("queue dirname from %s"%listfolderfile, file=fid)
     
     with open(runfilename, 'w') as fid:
-        fid.write('condor_submit %s\n'%htcondor_subfile)
-        fid.write('condor_q --nobatch\n')
+        print('condor_submit %s'%htcondor_subfile, file=fid)
+        print('condor_q --nobatch', file=fid)
     os.chmod(runfilename,0o755)

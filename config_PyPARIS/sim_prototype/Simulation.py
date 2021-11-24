@@ -131,28 +131,28 @@ class Simulation(object):
         if self.ring_of_CPUs.I_am_the_master and pp.enable_arc_dip:
             with open('multigrid_config_dip.txt', 'w') as fid:
                 if hasattr(ecloud_dip.spacech_ele.PyPICobj, 'grids'):
-                    fid.write(repr(ecloud_dip.spacech_ele.PyPICobj.grids).encode('ascii'))
+                    print(repr(ecloud_dip.spacech_ele.PyPICobj.grids), file=fid)
                 else:
-                    fid.write(b"Single grid.")
+                    print("Single grid.", file=fid)
             
             with open('multigrid_config_dip.pkl', 'wb') as fid:
                 if hasattr(ecloud_dip.spacech_ele.PyPICobj, 'grids'):
                     pickle.dump(ecloud_dip.spacech_ele.PyPICobj.grids, fid)
                 else:
-                    pickle.dump('Single grid.', fid)
+                    pickle.dump(b'Single grid.', fid)
                 
         if self.ring_of_CPUs.I_am_the_master and pp.enable_arc_quad:
-            with open('multigrid_config_quad.txt', 'wb') as fid:
+            with open('multigrid_config_quad.txt', 'w') as fid:
                 if hasattr(ecloud_quad.spacech_ele.PyPICobj, 'grids'):
-                    fid.write(repr(ecloud_quad.spacech_ele.PyPICobj.grids).encode('ascii'))
+                    print(repr(ecloud_quad.spacech_ele.PyPICobj.grids), file=fid)
                 else:
-                    fid.write(b"Single grid.")
+                    print("Single grid.", file=fid)
 
             with open('multigrid_config_quad.pkl', 'wb') as fid:
                 if hasattr(ecloud_quad.spacech_ele.PyPICobj, 'grids'):
                     pickle.dump(ecloud_quad.spacech_ele.PyPICobj.grids, fid)
                 else:
-                    pickle.dump('Single grid.', fid)
+                    pickle.dump(b'Single grid.', fid)
                 
 
         # setup transverse losses (to "protect" the ecloud)

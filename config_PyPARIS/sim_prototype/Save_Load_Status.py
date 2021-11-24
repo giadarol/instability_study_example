@@ -11,15 +11,12 @@ class SimulationStatus(object):
 		self.filename = 'simulation_status.sta'
 	
 	def dump_to_file(self):
-		lines = []
-		lines.append('present_simulation_part = %d\n'%self.present_simulation_part)
-		lines.append('first_turn_part = %d\n'%self.first_turn_part)
-		lines.append('last_turn_part = %d\n'%self.last_turn_part)
-		lines.append('present_part_done = %s\n'%repr(self.present_part_done))
-		lines.append('present_part_running = %s\n'%repr(self.present_part_running))
-		
-		with open(self.filename, 'wb') as fid:
-			fid.writelines(lines)
+		with open(self.filename, 'w') as fid:
+		        print('present_simulation_part = %d'%self.present_simulation_part, file=fid)
+		        print('first_turn_part = %d'%self.first_turn_part, file=fid)
+		        print('last_turn_part = %d'%self.last_turn_part, file=fid)
+		        print('present_part_done = %s'%repr(self.present_part_done), file=fid)
+		        print('present_part_running = %s'%repr(self.present_part_running), file=fid)
 			
 	def load_from_file(self):
 		with open(self.filename) as fid:

@@ -22,4 +22,4 @@ def replaceline_and_save(fname, findln, newline):
         lines[pos] = newline+'\n'
     
     with open(fname, 'w') as fid:
-        fid.writelines(lines)
+        print(*lines, sep='', file=fid)
