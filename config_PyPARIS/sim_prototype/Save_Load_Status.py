@@ -21,11 +21,11 @@ class SimulationStatus(object):
 	def load_from_file(self):
 		with open(self.filename) as fid:
 			exec(fid.read())
-		self.present_simulation_part = present_simulation_part
-		self.first_turn_part = first_turn_part
-		self.last_turn_part = last_turn_part
-		self.present_part_done = present_part_done
-		self.present_part_running = present_part_running
+			self.present_simulation_part = present_simulation_part
+			self.first_turn_part = first_turn_part
+			self.last_turn_part = last_turn_part
+			self.present_part_done = present_part_done
+			self.present_part_running = present_part_running
 		
 	def print_from_file(self):
 		with open(self.filename) as fid:
