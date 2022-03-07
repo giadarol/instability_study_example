@@ -19,14 +19,15 @@ class SimulationStatus(object):
 		        print('present_part_running = %s'%repr(self.present_part_running), file=fid)
 			
 	def load_from_file(self):
+		ddd = {}
 		with open(self.filename) as fid:
-			exec(fid.read())
-			self.present_simulation_part = present_simulation_part
-			self.first_turn_part = first_turn_part
-			self.last_turn_part = last_turn_part
-			self.present_part_done = present_part_done
-			self.present_part_running = present_part_running
-		
+			exec(fid.read(), ddd)
+		self.present_simulation_part = ddd['present_simulation_part']
+		self.first_turn_part = ddd['first_turn_part']
+		self.last_turn_part = ddd['last_turn_part']
+		self.present_part_done = ddd['present_part_done']
+		self.present_part_running = ddd['present_part_running']
+
 	def print_from_file(self):
 		with open(self.filename) as fid:
 			print (fid.read())
